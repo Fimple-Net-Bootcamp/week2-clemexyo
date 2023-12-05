@@ -1,6 +1,8 @@
-﻿namespace week2.Requests
-{
-    public class CreateWeatherResponse
-    {
-    }
-}
+﻿namespace week2.Requests.Weather;
+
+public record WeatherResponse
+(
+    Guid id,
+    string Name,
+    string Description
+);
