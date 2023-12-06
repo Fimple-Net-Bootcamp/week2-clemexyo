@@ -7,8 +7,6 @@ using week2.Services.Weathers;
 
 namespace week2.Controllers;
 
-[ApiController]
-[Route("[controller]")]
 public class WeathersController : CustomApiControllerBase
 {
     private readonly IWeatherService _weatherService;

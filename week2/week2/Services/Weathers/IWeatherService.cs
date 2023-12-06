@@ -9,4 +9,5 @@ public interface IWeatherService
     ErrorOr<Deleted> DeleteWeather(Guid id);
     ErrorOr<Weather> GetWeather(Guid id);
     ErrorOr<Updated> UpdateWeather(Weather weather);
+    ErrorOr<Weather> GetRandomWeather();
 }

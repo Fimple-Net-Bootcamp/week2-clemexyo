@@ -1,8 +1,10 @@
+using week2.Services.Planets;
 using week2.Services.Weathers;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddScoped<IWeatherService, WeatherService>();
+builder.Services.AddScoped<IPlanetService, PlanetService>();
 
 
 //builder.Services.AddEndpointsApiExplorer();

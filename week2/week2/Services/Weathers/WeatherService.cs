@@ -43,4 +43,17 @@ public class WeatherService : IWeatherService
 
         return Errors.Weather.NotFound;
     }
+
+    public ErrorOr<Weather> GetRandomWeather()
+    {
+        var random = new Random();
+
+        if(_weathers.Count > 0)
+        {
+            int randomIndex = random.Next(0, _weathers.Count);
+            Guid randomGuid = _weathers.Keys.ElementAt(randomIndex);
+            return _weathers[randomGuid];
+        }
+        return Errors.Weather.NotFound;
+    }
 }

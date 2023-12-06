@@ -8,7 +8,6 @@ public class Weather
 
     public Weather(Guid id, string name, string description)
     {
-        //enforce something
         Id = id;
         Name = name;
         Description = description;
