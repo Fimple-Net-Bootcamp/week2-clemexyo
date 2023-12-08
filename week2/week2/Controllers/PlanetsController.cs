@@ -39,6 +39,32 @@ public class PlanetsController : CustomApiControllerBase
                            value: response);
     }
 
+    [HttpGet]
+    public IActionResult GetPlanetsSorted([FromQuery] string sorted)
+    {
+        if (string.Equals(sorted, "desc", StringComparison.OrdinalIgnoreCase))
+        {
+            ErrorOr<Dictionary<Guid, Planet>> result = _planetService.GetPlanetsDescSorted();
+            return result.Match(
+                data => Ok(data),
+                errors => Problem(errors));
+        }
+        else if (string.Equals(sorted, "asc", StringComparison.OrdinalIgnoreCase))
+        {
+            ErrorOr<Dictionary<Guid, Planet>> result = _planetService.GetPlanetsAscSorted();
+            return result.Match(
+                data => Ok(data),
+                errors => Problem(errors));
+        }
+        else
+        {
+            // Handle the case where the 'sorted' parameter is not 'asc' or 'desc'
+            return BadRequest("Invalid value for 'sorted' parameter. Use 'asc' or 'desc'.");
+        }
+
+
+    }
+
     [HttpGet("{id}")]
     public IActionResult GetPlanet(Guid id)
     {

@@ -51,6 +51,26 @@ namespace week2.Services.Planets
             return Errors.Planet.NotFound;
         }
 
+        public ErrorOr<Dictionary<Guid, Planet>> GetPlanetsDescSorted()
+        {
+            if( _planets.Count == 0)
+            {
+                return Errors.Planet.NotFound;
+            }
+
+            return _planets.OrderByDescending(k => k.Value.CreatedAt).ToDictionary(k => k.Key, k => k.Value);
+        }
+
+        public ErrorOr<Dictionary<Guid, Planet>> GetPlanetsAscSorted()
+        {
+            if (_planets.Count == 0)
+            {
+                return Errors.Planet.NotFound;
+            }
+
+            return _planets.OrderBy(k => k.Value.CreatedAt).ToDictionary(k => k.Key, k => k.Value);
+        }
+
         public ErrorOr<Updated> UpdatePlanet(Planet planet)
         {
             if (_planets.ContainsKey(planet.Id))

@@ -9,4 +9,7 @@ public interface IPlanetService
     ErrorOr<Deleted> DeletePlanet(Guid id);
     ErrorOr<Planet> GetPlanet(Guid id);
     ErrorOr<Updated> UpdatePlanet(Planet planet);
+
+    ErrorOr<Dictionary<Guid, Planet>> GetPlanetsDescSorted();
+    ErrorOr<Dictionary<Guid, Planet>> GetPlanetsAscSorted();
 }

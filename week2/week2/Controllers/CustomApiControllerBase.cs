@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace week2.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/v1/[controller]")]
 public class CustomApiControllerBase : ControllerBase
 {
     protected IActionResult Problem(List<Error> errors)
