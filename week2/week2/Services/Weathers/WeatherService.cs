@@ -56,4 +56,22 @@ public class WeatherService : IWeatherService
         }
         return Errors.Weather.NotFound;
     }
+
+    public ErrorOr<Dictionary<Guid, Weather>> GetWeathersDescSorted()
+    {
+        if (_weathers.Count == 0)
+        {
+            return Errors.Weather.NotFound;
+        }
+        return _weathers.OrderByDescending(k => k.Value.CreatedAt).ToDictionary(k => k.Key, k => k.Value);
+    }
+
+    public ErrorOr<Dictionary<Guid, Weather>> GetWeathersAscSorted()
+    {
+        if(_weathers.Count == 0)
+        {
+            return Errors.Weather.NotFound;
+        }
+        return _weathers.OrderBy(k => k.Value.CreatedAt).ToDictionary(k => k.Key, k => k.Value);
+    }
 }

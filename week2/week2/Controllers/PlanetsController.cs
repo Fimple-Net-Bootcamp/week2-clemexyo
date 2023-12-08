@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using week2.Models;
 using week2.Requests.Planet;
 using week2.Requests.Weather;
+using week2.ServiceErrors;
 using week2.Services.Planets;
-using week2.Services.Weathers;
 
 namespace week2.Controllers;
 
@@ -61,8 +61,6 @@ public class PlanetsController : CustomApiControllerBase
             // Handle the case where the 'sorted' parameter is not 'asc' or 'desc'
             return BadRequest("Invalid value for 'sorted' parameter. Use 'asc' or 'desc'.");
         }
-
-
     }
 
     [HttpGet("{id}")]
@@ -72,5 +70,42 @@ public class PlanetsController : CustomApiControllerBase
         return getPlanetResult.Match(
             planet => Ok(new PlanetResponse(planet.Id, planet.Name, planet.Weather)),
             errors => Problem(errors));
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult DeletePlanet(Guid id)
+    {
+        ErrorOr<Deleted> deletedResult = _planetService.DeletePlanet(id);
+
+        return deletedResult.Match(
+            deleted => NoContent(),
+            errors => Problem(errors));
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult UpdatePlanet(Guid id, UpdatePlanetRequest request)
+    {
+        var planet = new Planet(
+            id,
+            request.Name,
+            request.Weather);
+
+        var updatePlanetResult = _planetService.UpdatePlanet(planet);
+        return updatePlanetResult.Match(
+            updated => NoContent(),
+            errors => Problem(errors));
+    }
+
+    [HttpPatch]
+    public IActionResult PatchPlanet(PatchPlanetRequest request)
+    {
+        Guid id = request.id;
+        string name = request.Name;
+
+        var patchPlanetResult = _planetService.PatchPlanet(id, name);
+
+        return patchPlanetResult.Match(
+           updated => Ok(),
+           errors => Problem(errors));
     }
 }

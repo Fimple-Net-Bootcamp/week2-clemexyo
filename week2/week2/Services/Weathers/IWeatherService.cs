@@ -10,4 +10,7 @@ public interface IWeatherService
     ErrorOr<Weather> GetWeather(Guid id);
     ErrorOr<Updated> UpdateWeather(Weather weather);
     ErrorOr<Weather> GetRandomWeather();
+
+    ErrorOr<Dictionary<Guid, Weather>> GetWeathersDescSorted();
+    ErrorOr<Dictionary<Guid, Weather>> GetWeathersAscSorted();
 }

@@ -12,4 +12,6 @@ public interface IPlanetService
 
     ErrorOr<Dictionary<Guid, Planet>> GetPlanetsDescSorted();
     ErrorOr<Dictionary<Guid, Planet>> GetPlanetsAscSorted();
+
+    ErrorOr<Updated> PatchPlanet(Guid id, string name);
 }

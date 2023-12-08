@@ -81,5 +81,16 @@ namespace week2.Services.Planets
 
             return Errors.Planet.NotFound;
         }
+
+        public ErrorOr<Updated> PatchPlanet(Guid id, string name)
+        {
+            if (_planets.ContainsKey(id))
+            {
+                _planets[(Guid)id].Name = name;
+                return Result.Updated;
+            }
+
+            return Errors.Planet.NotFound;
+        }
     }
 }

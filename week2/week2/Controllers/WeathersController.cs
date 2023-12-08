@@ -74,4 +74,28 @@ public class WeathersController : CustomApiControllerBase
             deleted => NoContent(),
             errors => Problem(errors));
     }
+
+    [HttpGet]
+    public IActionResult GetWeathersSorted([FromQuery] string sorted)
+    {
+        if (string.Equals(sorted, "desc", StringComparison.OrdinalIgnoreCase))
+        {
+            ErrorOr<Dictionary<Guid, Weather>> result = _weatherService.GetWeathersDescSorted();
+            return result.Match(
+                data => Ok(data),
+                errors => Problem(errors));
+        }
+        else if (string.Equals(sorted, "asc", StringComparison.OrdinalIgnoreCase))
+        {
+            ErrorOr<Dictionary<Guid, Weather>> result = _weatherService.GetWeathersAscSorted();
+            return result.Match(
+                data => Ok(data),
+                errors => Problem(errors));
+        }
+        else
+        {
+            // Handle the case where the 'sorted' parameter is not 'asc' or 'desc'
+            return BadRequest("Invalid value for 'sorted' parameter. Use 'asc' or 'desc'.");
+        }
+    }
 }
